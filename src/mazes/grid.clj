@@ -9,7 +9,8 @@
 (defprotocol CellOperation
   (link-cell [_ direction grid])
   (neighbors [_ grid])
-  (links [_ grid]))
+  (links [_ grid])
+  (set-value [_ value grid]))
 
 (def direction-complement
   {:n :s
@@ -17,7 +18,8 @@
    :e :w
    :w :e})
 
-(defrecord Cell [location links]
+
+(defrecord Cell [location links value]
   CellOperation
   (link-cell [this direction grid]
     (let [n (map :location (map second (neighbors this grid)))
@@ -30,8 +32,8 @@
           linked (some #{[ns ew]} n)
           linked-cell (when linked (get-in grid linked))]
       (if linked-cell
-        (-> (assoc-in grid [lat lng] (->Cell location (conj links direction)))
-            (assoc-in linked (->Cell linked (conj (:links linked-cell) (direction-complement direction)))))
+        (-> (assoc-in grid [lat lng] (->Cell location (conj links direction) value))
+            (assoc-in linked (->Cell linked (conj (:links linked-cell) (direction-complement direction)) (:value linked-cell))))
         grid)))
 
   (neighbors [_ grid]
@@ -40,15 +42,19 @@
                 :let [[ns ew] (mapv + location (second offset))]
                 :when (and (<= 0 ew (dec (count (grid 0)))) (<= 0 ns (dec (count grid))))]
             [(first offset) (get-in grid [ns ew])])))
+
   (links [_ grid]
-    links))
+    links)
+
+  (set-value [_ value grid]
+    (assoc-in grid location (->Cell location links value))))
 
 (defn grid
   [height width]
   (into []
         (for [i (range 0 height)]
           (mapv
-            #(->Cell [i %] #{}) (range 0 width)))))
+            #(->Cell [i %] #{} nil) (range 0 width)))))
 
 (defn draw-grid
   [grid]

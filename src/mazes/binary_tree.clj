@@ -1,11 +1,8 @@
 (ns mazes.binary-tree
-  (:require [mazes.grid :refer [grid generate-cords link-cell neighbors draw-grid]]))
+  (:require [mazes.grid :refer [grid generate-cords link-cell neighbors draw-grid]]
+            [mazes.utils :as utils]))
 
-(defn empty-rand-nth
-  [coll]
-  (if (empty? coll)
-    nil
-    (rand-nth coll)))
+
 
 (defn binary-tree
   [height width]
@@ -17,10 +14,10 @@
               (neighbors c grid)
               (select-keys [:s :e])
               (vec)
-              (empty-rand-nth)
+              (utils/empty-rand-nth)
               (first)
               (lc grid))
-            grid)))
+            grid)))                                         ; no neighbors for the last cell
     (grid height width)
     (generate-cords height width)))
 
