@@ -1,7 +1,9 @@
 (ns mazes.djikastra
   (:require [mazes.grid :refer [set-value links draw-grid]]
-            [mazes.binary-tree :refer [binary-tree]]
-            [mazes.sidewinder :refer [sidewinder]])
+            [mazes.binary-tree :as binary-tree]
+            [mazes.sidewinder :as sidewinder]
+            [mazes.aldous-broder :as aldous-broder])
+
   (:import (clojure.lang PersistentQueue)))
 
 (defn grid-value-setter
@@ -63,7 +65,8 @@
   [algo height width start-location end-location]
   (let [[distance-grid path-grid] (shortest-path-to (algo height width) start-location end-location)]
     (draw-grid distance-grid)
+
     (draw-grid path-grid)))
 
-;;(draw-grid-distances sidewinder 8 8 [0 0])
+;;(draw-grid-distances sidewinder/mazw-generator 8 8 [0 0])
 ;;

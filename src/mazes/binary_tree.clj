@@ -1,10 +1,8 @@
 (ns mazes.binary-tree
-  (:require [mazes.grid :refer [grid generate-cords link-cell neighbors draw-grid]]
+  (:require [mazes.grid :refer [grid generate-cords link-cell neighbors]]
             [mazes.utils :as utils]))
 
-
-
-(defn binary-tree
+(defn maze-generator
   [height width]
   (reduce
     (fn [grid coords]
@@ -21,6 +19,6 @@
     (grid height width)
     (generate-cords height width)))
 
-(defn draw-binary-tree-grid
+(defn draw-grid
   [height width]
-  (draw-grid (binary-tree height width)))
+  (mazes.grid/draw-grid (maze-generator height width)))

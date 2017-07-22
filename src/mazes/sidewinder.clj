@@ -1,6 +1,6 @@
 (ns mazes.sidewinder
   (:require [clojure.core.match :refer [match]]
-            [mazes.grid :refer [grid generate-cords link-cell neighbors draw-grid]]
+            [mazes.grid :refer [grid generate-cords link-cell neighbors]]
             [mazes.utils :as utils]))
 
 
@@ -24,7 +24,7 @@
           (handle-run))
         [grid run])) )
 
-(defn sidewinder
+(defn maze-generator
   [height width]
   (first
     (reduce
@@ -32,6 +32,6 @@
       [(grid height width) []]
       (generate-cords height width))))
 
-(defn draw-sidewinder-grid
+(defn draw-grid
   [height width]
-  (draw-grid (sidewinder height width)))
+  (mazes.grid/draw-grid (maze-generator height width)))
