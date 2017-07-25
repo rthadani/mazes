@@ -1,5 +1,5 @@
 (ns mazes.aldous-broder
-  (:require [mazes.grid :refer [grid neighbors links link-cell generate-cords]]))
+  (:require [mazes.grid :refer [grid neighbors links link-cell generate-cords has-links?]]))
 
 (defn update-link
   [grid cell [dir neighbor]]
@@ -18,7 +18,7 @@
          neighbor (random-neighbor cell grid)]
     (cond
       (<= unvisited 0) grid
-      (empty? (links (second neighbor) grid))
+      (not (has-links? (second neighbor)))
       (let [[new-grid next-cell] (update-link grid cell neighbor)]
         (recur (dec unvisited) new-grid next-cell (random-neighbor next-cell new-grid)))
       :else

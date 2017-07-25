@@ -9,7 +9,10 @@
 (defprotocol CellOperation
   (link-cell [_ direction grid])
   (neighbors [_ grid])
+  (neighbor-locations [_ grid])
   (links [_ grid])
+  (has-links? [_])
+  (neighbor-direction-by-location [_ location grid])
   (set-value [_ value grid]))
 
 (def direction-complement
@@ -42,6 +45,17 @@
                 :when (and (<= 0 ew (dec (count (grid 0)))) (<= 0 ns (dec (count grid))))]
             [(first offset) (get-in grid [ns ew])])))
 
+  (neighbor-locations [_ grid]
+    (->>
+      (neighbors (get-in grid location) grid)
+      (map (comp :location second))))
+
+  (neighbor-direction-by-location [_ neighbor-location grid]
+    (->>
+      (neighbors (get-in grid location) grid)
+      (filter (fn [[dir cell]]  (= (:location cell) neighbor-location)))
+      (ffirst)) )
+
   (links [_ grid]
     (let [[lat lng] location]
       (into {}
@@ -51,6 +65,9 @@
                     :e [:e (get-in grid [lat (inc lng)])]
                     :w [:w (get-in grid [lat (dec lng)])])
                  linked-cells))))
+
+  (has-links? [_]
+    (not-empty linked-cells))
 
   (set-value [_ value grid]
     (assoc-in grid location (->Cell location linked-cells value))))
