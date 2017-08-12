@@ -1,10 +1,6 @@
 (ns mazes.aldous-broder
-  (:require [mazes.grid :refer [grid neighbors links link-cell generate-cords has-links?]]))
-
-(defn update-link
-  [grid cell [dir neighbor]]
-  (let [new-grid (link-cell cell dir grid)]
-    [new-grid (get-in new-grid (:location neighbor))]))
+  (:require [mazes.grid :refer [grid neighbors links link-cell generate-cords has-links? update-link]]
+            [mazes.utils :as utils]))
 
 (defn random-neighbor
   [cell grid]

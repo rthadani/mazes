@@ -130,3 +130,8 @@
   (for [i (range 0 height)
         j (range 0 width)]
     [i j]))
+
+(defn update-link
+  [grid cell [dir neighbor]]
+  (let [new-grid (link-cell cell dir grid)]
+    [new-grid (get-in new-grid (:location neighbor))]))
