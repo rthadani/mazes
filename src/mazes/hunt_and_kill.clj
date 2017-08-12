@@ -23,8 +23,6 @@
       [cell (rand-nth visited-neighbors)])
     first))
 
-
-
 (defn maze-generator
   [height width]
   (loop [unvisited (dec (* height width))

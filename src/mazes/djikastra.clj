@@ -2,7 +2,8 @@
   (:require [mazes.grid :refer [set-value links draw-grid]]
             [mazes.binary-tree :as binary-tree]
             [mazes.sidewinder :as sidewinder]
-            [mazes.aldous-broder :as aldous-broder])
+            [mazes.aldous-broder :as aldous-broder]
+            [mazes.hunt-and-kill :as hunt-and-kill])
 
   (:import (clojure.lang PersistentQueue)))
 
@@ -63,10 +64,11 @@
 
 (defn draw-shortest-path
   [algo height width start-location end-location]
-  (let [[distance-grid path-grid] (shortest-path-to (algo height width) start-location end-location)]
+  (let [ empty-grid (algo height width)
+        [distance-grid path-grid] (shortest-path-to  empty-grid start-location end-location)]
+    (draw-grid empty-grid)
     (draw-grid distance-grid)
-
     (draw-grid path-grid)))
 
-;;(draw-grid-distances sidewinder/mazw-generator 8 8 [0 0])
+;;(draw-grid-distances sidewinder/mazw-generator 8 8 [0 0] [7 7])
 ;;
