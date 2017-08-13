@@ -3,8 +3,6 @@
             [mazes.grid :refer [grid generate-cords link-cell neighbors]]
             [mazes.utils :as utils]))
 
-
-
 (defn handle-run [grid run cell [dir neighbor-cell]]
   (if (= dir :e)
     (let [new-grid (link-cell cell dir grid)]

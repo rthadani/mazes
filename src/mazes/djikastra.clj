@@ -3,7 +3,8 @@
             [mazes.binary-tree :as binary-tree]
             [mazes.sidewinder :as sidewinder]
             [mazes.aldous-broder :as aldous-broder]
-            [mazes.hunt-and-kill :as hunt-and-kill])
+            [mazes.hunt-and-kill :as hunt-and-kill]
+            [mazes.recursive-backtracker :as recursive-backtracker])
 
   (:import (clojure.lang PersistentQueue)))
 
