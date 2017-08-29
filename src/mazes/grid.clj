@@ -1,10 +1,6 @@
 (ns mazes.grid
-  (:require [clojure.string :as str]))
-
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+  (:require [clojure.string :as str]
+            [clojure.set :as set]))
 
 (defprotocol CellOperation
   (link-cell [_ direction grid])
@@ -85,6 +81,7 @@
       (reduce
         (fn [m {:keys [value]}] (max m (+ 1 (count (str value)))))
         3)))
+
 (defn formatted-cell-value
   [c empty cell-width trailer]
   (if-not (nil? (:value c))
@@ -135,3 +132,8 @@
   [grid cell [dir neighbor]]
   (let [new-grid (link-cell cell dir grid)]
     [new-grid (get-in new-grid (:location neighbor))]))
+
+(defn dead-ends
+  [grid]
+  (->> (flatten grid)
+     (filter #(= 1 (count (links % grid))))))
