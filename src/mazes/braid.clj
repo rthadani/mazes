@@ -3,6 +3,7 @@
             [mazes.binary-tree :as binary-tree]
             [mazes.sidewinder :as sidewinder]
             [mazes.aldous-broder :as aldous-broder]
+            [mazes.wilsons :as wilsons]
             [mazes.hunt-and-kill :as hunt-and-kill]
             [mazes.recursive-backtracker :as recursive-backtracker]
             [clojure.set :as set]))
