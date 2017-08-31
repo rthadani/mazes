@@ -1,14 +1,8 @@
 # mazes
 
-A Clojure library designed to ... well, that part is up to you.
+Implements algorithms from the book mazes for programmers by James Buck.
 
-## Usage
+It's still just a library so a repl is required but every algorithm contains a draw-grid method that draws out the maze.
+There is also an implementation of djikstras shortest path to solve mazes
 
-FIXME
 
-## License
-
-Copyright © 2017 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
