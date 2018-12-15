@@ -1,8 +1,20 @@
-# mazes
+# Mazes for programmers
 
 Implements algorithms from the book mazes for programmers by James Buck.
 
-It's still just a library so a repl is required but every algorithm contains a draw-grid method that draws out the maze.
-There is also an implementation of djikstras shortest path to solve mazes
+To run 
+
+```
+lein run 
+```
+
+For help
+```
+lein run mazes.core -h
+  -a, --algorithm ALGORITHM  binary-tree  algorithm: one of aldous-broder, binary-tree, braid, hunt-and-kill, recursive-bactracker, sidewinder, wilsons
+  -p, --shortest-path                     print the shortest path with djikastra
+  -s, --size SIZE            8
+  -h, --help
+```
 
 
