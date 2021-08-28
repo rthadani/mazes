@@ -72,5 +72,5 @@
     (draw-grid distance-grid)
     (draw-grid path-grid)))
 
-;;(draw-grid-distances sidewinder/mazw-generator 8 8 [0 0] [7 7])
+;;(draw-grid-distances sidewinder/maze-generator 8 8 [0 0] [7 7])
 ;;

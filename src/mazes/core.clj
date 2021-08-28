@@ -16,10 +16,11 @@
 (def cli-options
   [["-a"
     "--algorithm ALGORITHM"
-    "algorithm: one of aldous-broder, binary-tree, braid, hunt-and-kill, recursive-bactracker, sidewinder, wilsons"
+    "algorithm: one of aldous-broder, binary-tree, hunt-and-kill, recursive-bactracker, sidewinder, wilsons"
     :default "binary-tree"
     :validate [(fn [option] (fn [option] (some #(#{"binary-tree", "sidewinder", "aldous-broder", "hunt-and-kill", "recursive-backtracker", "wilsons", "braid"} %) #{option})))  
                "Must be one of aldous-broder, binary-tree, braid, hunt-and-kill, recursive-bactracker, sidewinder, wilsons"]]
+   ["-b" "--braid BRAID_PROBABILITY" "braid dead ends with probability" :default 1.0 :parse-fn #(Float/parseFloat %)]
    ["-p" "--shortest-path" "print the shortest path with djikastra"]
    ["-s" "--size SIZE" :default 8 :parse-fn #(Integer/parseInt %)]     
    ["-h" "--help"]])
@@ -30,7 +31,7 @@
 
 (defn validate-args
   [args]
-  (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
+  (let [{:keys [options _ errors summary]} (parse-opts args cli-options)]
     (cond
       (:help options) {:exit-message summary :ok? true}
       errors {:exit-message (error-msg errors)}
@@ -42,7 +43,7 @@
 
 (defn -main [& args] 
   (let [{:keys [options exit-message ok?]} (validate-args args) 
-      {:keys [algorithm shortest-path size]} options]
+      {:keys [algorithm shortest-path size braid]} options]
     (if exit-message
       (exit (if ok? 0 1) exit-message)
       (let [algo (case algorithm
@@ -51,9 +52,9 @@
                    "aldous-broder" aldous-broder/maze-generator
                    "hunt-and-kill" hunt-and-kill/maze-generator
                    "recursive-bactracker" recursive-backtracker/maze-generator
-                   "wilsons" wilsons/maze-generator
-                   "braid" braid/maze-generator)]
-        (println algorithm)          
+                   "wilsons" wilsons/maze-generator)
+            algo (if (< braid 1) (partial braid/maze-generator algo braid) algo)]
+        (println algorithm (if (< braid 1) " braided" ""))          
         (if shortest-path
           (draw-shortest-path algo size size [0 0] [(dec size) (dec size)])
           (draw-grid (algo size size)))))))

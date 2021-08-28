@@ -26,11 +26,11 @@
        (dead-ends grid)))
 
 (defn maze-generator
-  [algo height width & {:keys [p] :or {p 1.0}}]
+  [algo p height width]
   (->
     (algo height width)
     (braid p)))
 
 (defn draw-grid
   [algo height width]
-  (mazes.grid/draw-grid (maze-generator algo height width)))
+  (mazes.grid/draw-grid (maze-generator algo  0.1 height width)))
